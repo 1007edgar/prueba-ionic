@@ -29,7 +29,6 @@ export class AppComponent {
 
   salirLogin(){
     this.logout = false;
-    localStorage.removeItem('Usuario');
     localStorage.removeItem('activo');
     this.router.navigate(["/login"]);
   }
