@@ -14,8 +14,8 @@
   <!-- List of Text Items -->
   <!--<ion-list *ngIf="permission">-->
     <ion-list-header></ion-list-header>
-    <ion-item *ngFor="let list of buscarList" ><!--Cmabiamos "users" por searchUser porqye ahora hacemos la busqueda con searchUser-->
-      <ion-label (click)="presentAlert1()">
+    <ion-item *ngFor="let list of buscarList" (click)="mostrarModal(list)"><!--Cmabiamos "users" por searchUser porqye ahora hacemos la busqueda con searchUser-->
+      <ion-label>
         <h2>{{list.title}}</h2>
         <p></p>
       </ion-label>

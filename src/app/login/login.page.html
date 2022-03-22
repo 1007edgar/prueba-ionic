@@ -1,13 +1,22 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form>
-    <ion-input type="text" placeholder="Email"></ion-input>
-    <ion-input type="password" placeholder="Password"></ion-input>
-    <ion-button color="primary" (click)="login()">Login</ion-button>
-  </form>
+  <ion-card>
+    <form [formGroup]="formularioLogin" (keyup.enter)="login()" novalidate>
+      <ion-input  formControlName="email" type="email" placeholder="Email" required></ion-input>
+      <ion-input  formControlName="password" type="password" placeholder="Password" required></ion-input>
+      <ion-button color="primary" (click)="login()" disabled="false">Login</ion-button>
+    </form>
+  </ion-card>
+  <ion-list>
+    <ion-item>
+      <ion-button [routerLink]="['/guardar-usuario']">
+        Registrarse
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

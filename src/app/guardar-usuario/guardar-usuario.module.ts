@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LoginPageRoutingModule } from './login-routing.module';
+import { GuardarUsuarioPageRoutingModule } from './guardar-usuario-routing.module';
 
-import { LoginPage } from './login.page';
+import { GuardarUsuarioPage } from './guardar-usuario.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginPageRoutingModule,
+    GuardarUsuarioPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [LoginPage]
+  declarations: [GuardarUsuarioPage]
 })
-export class LoginPageModule {}
+export class GuardarUsuarioPageModule {}

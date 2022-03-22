@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
+import { HttpClientModule } from '@angular/common/http';
+import { WebserviceService } from '../webservice/webservice.service';
+import { ModalController } from '@ionic/angular';
+import { VisitasPage } from '../visitas/visitas.page';
 
 @Component({
   selector: 'app-listado',
@@ -12,31 +16,30 @@ import { ToastController } from '@ionic/angular';
 export class ListadoPage implements OnInit {
   buscarList:any;
   listado:any [];
+  items;
+  visitas:number = 0;
+  new_list:any = {};
 
 
   constructor(
     private http:HttpClient,
     private activaRoute:ActivatedRoute,
     public toastController: ToastController,
-    public alertController:ToastController
+    public alertController:ToastController,
+    public webservice:WebserviceService,
+    private modalController:ModalController
   ) { }
 
   ngOnInit() {
-    this.getItems().subscribe(res=>{
-      console.log("respuesta", res);
-      this.listado = res;
-      this.buscarList = this.listado;
-    });
+    this.webservice.getObtenerDatos()
+      .subscribe(res=>{
+        console.log("respuesta", res);
+        this.listado = res;
+        this.buscarList = this.listado;
+      });
   }
 
-  //extraemos el archivo json
-  getItems(){
-    return this.http
-    .get("assets/listado-json/test.json").pipe(map((res:any) =>{
-        return res.data;
-      })
-    )
-  }
+
 
   buscadorItem(event){
     const text = event.target.value;
@@ -55,14 +58,26 @@ export class ListadoPage implements OnInit {
   /**
    * Modal visitas
    */
-   async presentAlert1(){
-    const alert = await this.alertController.create({
-      header: "Visitas",
-      message: "",
-      buttons: ["Ok"],
+  async mostrarModal(lists){
+    console.log(lists);
+    
+    this.visitas = parseInt(lists.visits);
+    this.visitas +=1;
+
+    this.new_list = {
+      item_id: lists.item_id,
+      title: lists.title,
+      value: lists.value,
+      visits: this.visitas
+
+    }
+    console.log("nueva_list",this.new_list);
+    //this.webservice.actualizarVisitas(this.new_list);
+    const modal = this.modalController.create({
+      component: VisitasPage,
+      componentProps:   {item_id: lists.item_id, title: lists.title, value: lists.value, visits: this.visitas}
     });
-    await alert.present();
-    let result = await alert.onDidDismiss();//para que no se cierre automáticamente
-    console.log(result);
+    await (await modal).present();
   }
+
 }

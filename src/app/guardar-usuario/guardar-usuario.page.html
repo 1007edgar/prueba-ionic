@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>guardar-usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form  [formGroup]="formularioRegistro" (ngSubmit)="guardarUsuario()" (keyup.enter)="guardarUsuario()">
+    <ion-input formControlName="email" type="text" placeholder="Email"></ion-input>
+    <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+    <ion-button color="primary" (click)="guardarUsuario()">Login</ion-button>
+  </form>
+</ion-content>
