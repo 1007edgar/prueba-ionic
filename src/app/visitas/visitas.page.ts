@@ -9,10 +9,10 @@ import { WebserviceService } from '../webservice/webservice.service';
 })
 export class VisitasPage implements OnInit {
   @Input() item_id:string;
-   @Input() title:string; 
-   @Input() value:string;
-   @Input() visits:string;
-   new_list:any = {};
+  @Input() title:string; 
+  @Input() value:string;
+  @Input() visits:string;
+  new_list:any = {};
   constructor(private modalController:ModalController,
     private activatedRoute:ActivatedRoute,
     public webservice:WebserviceService,
@@ -21,6 +21,9 @@ export class VisitasPage implements OnInit {
   ngOnInit() {
     console.log("id", this.item_id)
   }
+
+
+  
   cerrarModal(){
     this.new_list = {
       item_id: this.item_id,
@@ -30,7 +33,7 @@ export class VisitasPage implements OnInit {
 
     }
     this.modalController.dismiss();
-    this.webservice.actualizarVisitas(this.item_id, this.new_list);
+    this.webservice.postActualizarVisitas(this.item_id);
     
   }
 }

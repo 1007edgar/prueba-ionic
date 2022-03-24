@@ -56,29 +56,35 @@ export class ListadoPage implements OnInit {
     }
   }
 
-  /**
+   /**
    * Modal visitas
    */
-  async mostrarModal(lists){
-    console.log(lists);
-    
-    this.visitas = parseInt(lists.visits);
-    this.visitas +=1;
-
-    this.new_list = {
+    async mostrarModal(list){
+      //console.log(lists);
+      
+      /*this.visitas = parseInt(lists.visits);
+      this.visitas +=1;
+      
+      this.new_list = {
       item_id: lists.item_id,
       title: lists.title,
       value: lists.value,
       visits: this.visitas
-
-    }
-    console.log("nueva_list",this.new_list);
-    //this.webservice.actualizarVisitas(this.new_list);
-    const modal = this.modalController.create({
+      }*/
+      
+      
+      const modal = this.modalController.create({
       component: VisitasPage,
-      componentProps:   {item_id: lists.item_id, title: lists.title, value: lists.value, visits: this.visitas}
-    });
-    await (await modal).present();
-  }
+      componentProps: {item_id: list.item_id, title: list.title, value: list.value, visits: list.visits}
+      });
+      
+      this.webservice.postActualizarVisitas(list.item_id);
+      
+      await (await modal).present();
+      
+      this.ngOnInit();
+    }
+      
+    
 
 }
