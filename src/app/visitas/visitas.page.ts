@@ -26,7 +26,7 @@ export class VisitasPage implements OnInit {
       item_id: this.item_id,
       title: this.title,
       value: this.value,
-      visits: this.visits
+      visits: ""+this.visits+"",
 
     }
     this.modalController.dismiss();

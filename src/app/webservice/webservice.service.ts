@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class WebserviceService {
 
-  url = "https://optimizaprocess.net/test/";
+  url = "https://optimizaprocess.net/test/?";
+  url_update = "https://optimizaprocess.net/test/?o=update_visits ";
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -28,9 +29,11 @@ export class WebserviceService {
   }
 
   actualizarVisitas(id, lists){//: Observable<any>{
-    console.log("Visitas",lists);
+    var new_lists = JSON.parse(JSON.stringify(lists));
+    console.log("Visitas",new_lists);
+    //console.log("visitas2", JSON.stringify(new_lists));
     return new Promise(resolve =>{
-      this.http.post(this.url, JSON.stringify(lists), this.httpOptions)
+      this.http.post(this.url_update, new_lists, this.httpOptions)
       .subscribe(data=> {
         resolve(data);
       },error=>{

@@ -35,6 +35,7 @@ export class ListadoPage implements OnInit {
       .subscribe(res=>{
         console.log("respuesta", res);
         this.listado = res;
+        console.log("listado", this.listado);
         this.buscarList = this.listado;
       });
   }
