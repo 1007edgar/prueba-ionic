@@ -12,7 +12,7 @@ export class SesionNoActivaGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (localStorage.getItem('activo')) {
+      if (localStorage.getItem('usuario')) {
         this.router.navigate(["/listado"]);
         return false;
      }

@@ -4,7 +4,7 @@
       <ion-content>
         <ion-list id="inbox-list" >
           <ion-list-header>Inbox</ion-list-header>
-          <ion-note *ngIf="logout">{{usuRegistrado.email}}</ion-note>
+          <ion-note *ngIf="logout">{{usuRegistrado}}</ion-note>
           <ion-note *ngIf="logout">
             <ion-button class="btn-salir" (click)="salirLogin()">Salir</ion-button>
           </ion-note>

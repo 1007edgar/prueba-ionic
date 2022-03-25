@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { WebserviceService } from '../webservice/webservice.service';
+import { HttpClientModule } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -10,20 +14,17 @@ import { AlertController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  //isSubmitted = false;
   formularioLogin:FormGroup;
-  //usuarioRegistrado = localStorage.getItem("Usuario");
+  result_login:any;
 
   constructor(
     private router: Router,
     public formulario:FormBuilder,
-    public alertController:AlertController
+    public alertController:AlertController,
+    public webservice:WebserviceService
   ) { 
     this.formularioLogin = this.formulario.group({
-      email: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])),
+      email: [''],
       password: [''],
     });
   }
@@ -35,9 +36,8 @@ export class LoginPage implements OnInit {
   async login(){
     
     var usuLogin = this.formularioLogin.value;
-    console.log(this.formularioLogin.value);
+
     if (this.formularioLogin.invalid) {
-      console.log("Datos incorrectos");
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Datos Incorrectos',
@@ -45,29 +45,29 @@ export class LoginPage implements OnInit {
         message: 'Asegurese de que sus datos son correctos',
         buttons: ['OK']
       });
-  
       await alert.present();
       return;
     }
 
-    var usuRegistrado = JSON.parse(localStorage.getItem('Usuario'));
-    if (usuRegistrado.email == usuLogin.email && usuRegistrado.password == usuLogin.password) {
-      console.log("usuario correcto");
-      localStorage.setItem('activo','true');
-      this.router.navigate(["/listado"]);//Redirecciona a la lista de items
-    }
-
-    else{//Si los datos son incorrectos
-      console.log("Datos no válidos");
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        header: 'Datos incorrectos',
-        //subHeader: 'Subtitle',
-        message: 'Revise sus datos',
-        buttons: ['OK']
+    if(usuLogin){
+      this.webservice.login(usuLogin).subscribe(async response => {
+        this.result_login = response;
+        console.log(this.result_login);
+        //alert
+        const alert = await this.alertController.create({
+          cssClass: 'my-custom-class',
+          header: '',
+          //subHeader: 'Subtitle',
+          message: this.result_login.message,
+          buttons: ['OK']
+        });
+        await alert.present();
+        if (this.result_login.error == 0) {
+          this.router.navigate(["/listado"]);
+          localStorage.setItem('usuario', this.result_login.data.name);
+        }
       });
-      await alert.present();
-      return;
+      
     }
     
   }

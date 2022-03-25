@@ -13,13 +13,13 @@ export class SesionActivaGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-   if (localStorage.getItem('activo')) {
+    if (localStorage.getItem('usuario')) {
       return true;
-   }
-   else{
-     this.router.navigate(["/login"]);
-     return false;
-   }
+    }
+    else{
+      this.router.navigate(["/login"]);
+      return false;
+    }
   }
   
 }

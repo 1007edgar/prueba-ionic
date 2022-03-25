@@ -21,6 +21,15 @@ export class WebserviceService {
   constructor(
     public http:HttpClient
   ) { }
+
+  login(usuario){
+    const formData: any = new FormData();
+    formData.append('user', usuario.email);
+    formData.append('pass', usuario.password);
+  
+    return this.http
+      .post(this.url, formData);
+  }
   
   getObtenerDatos() {
     return this.http.get(this.url).pipe(map((res:any) => {
