@@ -65,6 +65,8 @@ export class LoginPage implements OnInit {
         if (this.result_login.error == 0) {
           this.router.navigate(["/listado"]);
           localStorage.setItem('usuario', this.result_login.data.name);
+          //Para mostrar el nombre de usuario en la barra lateral.
+          location.reload();//Si se quita location.reload(), ¡la aplicación funciona igual!.
         }
       });
       

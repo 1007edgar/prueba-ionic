@@ -14,22 +14,30 @@ export class AppComponent {
   //public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   email:any;
-  usuRegistrado = localStorage.getItem('usuario');
+  //usuRegistrado:any;
   logout:boolean;
+  usuRegistrado:any = localStorage.getItem('usuario');
   constructor(public router:Router){}
   ngOnInit(){
-    if (this.usuRegistrado) {
-      this.router.navigate(["/login"]);
-      this.logout = true;
-      this.usuRegistrado;
-      console.log("usuario",this.email);    
-    }
-
+    this.mostrarUsuario();
   }
 
   salirLogin(){
      //this.logout = false;
      localStorage.removeItem('usuario');
      this.router.navigate(["/login"]);
+     this.usuRegistrado = '';
+     //location.reload();
+  }
+
+  mostrarUsuario(): void{
+    if(localStorage.getItem('usuario')){
+      this.logout = true;
+      this.usuRegistrado;
+    }
+    else{
+      this.logout = false;
+    }
+    
   }
 }
